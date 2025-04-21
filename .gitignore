@@ -1,0 +1,10 @@
+# 📦 Node.js
+node_modules/
+.env
+uploads/
+dist/
+build/
+
+# 🛠 Logs & others
+*.log
+.DS_Store
