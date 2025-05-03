@@ -48,14 +48,15 @@ export async function createOrder(
   location: string,
   status: string,
   orderDate: string,
-  deliveryDate: string
+  deliveryDate: string,
+  productType: string
 ) {
   try {
     const orderID = await generateUniqueOrderID(location); // Генерируем уникальный ID
 
     await pool.query(
-      `INSERT INTO orders (order_id, user_id, status, order_date, delivery_date) VALUES ($1, $2, $3, $4, $5)`,
-      [orderID, userID, status, orderDate, deliveryDate]
+      `INSERT INTO orders (order_id, user_id, status, order_date, delivery_date, product_type) VALUES ($1, $2, $3, $4, $5, $6)`,
+      [orderID, userID, status, orderDate, deliveryDate, productType]
     );
 
     return orderID; // Возвращаем ID заказа для использования в Telegram-боте

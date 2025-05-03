@@ -36,6 +36,7 @@ router.post(
         promoCode,
         orderDate,
         deliveryDate,
+        productType,
       } = req.body;
       const orderImg = req.file;
 
@@ -47,7 +48,8 @@ router.post(
         !price ||
         !orderImg ||
         !orderDate ||
-        !deliveryDate
+        !deliveryDate ||
+        !productType
       ) {
         res.status(400).json({ message: "Отсутствуют обязательные поля" }); // ❌ Убрали return, просто вызываем res.json()
         return;
@@ -59,13 +61,15 @@ router.post(
         location,
         "pending",
         orderDate,
-        deliveryDate
+        deliveryDate,
+        productType
       );
 
       // 📌 Формируем сообщение для Telegram
       const message = `
 📦 *Новый заказ!*
 🆔 *Order ID:* ${orderID}
+🎨 *Тип продукта:* ${productType}
 📅 *Дата заказа:* ${orderDate}
 📦 *Дата выдачи:* ${deliveryDate}
 👤 *Клиент:* ${username} (${email})
