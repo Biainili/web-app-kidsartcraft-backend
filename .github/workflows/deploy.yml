@@ -24,5 +24,6 @@ jobs:
 
 
             cd ~/kids-art-craft-docker-compose
+            docker-compose down 
             docker-compose build backend
             docker-compose up -d backend
