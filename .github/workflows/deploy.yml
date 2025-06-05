@@ -1,5 +1,4 @@
 name: Deploy Backend
-
 on:
   push:
     branches: [master]
@@ -7,23 +6,19 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v0.1.6
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd ~/web-app-kidsartcraft-backend
-            git pull origin master
+    - name: Deploy via SSH
+      uses: appleboy/ssh-action@v0.1.6
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          cd ~/web-app-kidsartcraft-backend
+          git pull origin master
 
-
-            cd ~/kids-art-craft-docker-compose
-            docker-compose down 
-            docker-compose build backend
-            docker-compose up -d backend
+          cd ~/kids-art-craft-docker-compose
+          docker-compose -p ubuntu build backend
+          docker-compose -p ubuntu up -d --no-deps backend
